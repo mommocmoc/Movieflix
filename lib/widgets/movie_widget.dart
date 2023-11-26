@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:toonflix/screens/detail_screen.dart';
 
-class Webtoon extends StatelessWidget {
-  final String title, thumb, id;
+class Movie extends StatelessWidget {
+  final String title, backdrop, widgetId;
+  final int id;
 
-  const Webtoon({
+  const Movie({
     super.key,
     required this.title,
-    required this.thumb,
+    required this.backdrop,
     required this.id,
+    this.widgetId = "popular",
   });
 
   @override
@@ -20,7 +22,7 @@ class Webtoon extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => DetailScreen(
               title: title,
-              thumb: thumb,
+              backdrop: backdrop,
               id: id,
             ),
             fullscreenDialog: true,
@@ -32,7 +34,7 @@ class Webtoon extends StatelessWidget {
           Hero(
             tag: id,
             child: Container(
-              width: 250,
+              width: (widgetId == "popular") ? 300 : 250,
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
@@ -44,18 +46,20 @@ class Webtoon extends StatelessWidget {
                   )
                 ],
               ),
-              child: Image.network(thumb),
+              child: Image.network(backdrop),
             ),
           ),
           const SizedBox(
             height: 10,
           ),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 22,
-            ),
-          ),
+          (widgetId == "popular")
+              ? Container()
+              : Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 22,
+                  ),
+                ),
         ],
       ),
     );
